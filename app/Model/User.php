@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 获取关联到用户登陆记录
+     */
+    public function login_history()
+    {
+        return $this->hasMany('App\Model\UserLoginHistory');
+    }
 }

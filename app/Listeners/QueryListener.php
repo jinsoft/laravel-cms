@@ -21,11 +21,11 @@ class QueryListener
     /**
      * Handle the event.
      *
-     * @param  QueryExecuted  $event
+     * @param  QueryExecuted $event
      * @return void
      */
     public function handle(QueryExecuted $event)
     {
-        //
+        if (env('DB_LOG', false)) \Log::info('(' . $event->time . 'ms) ' . $event->sql . ' ' . join(',', $event->bindings));
     }
 }

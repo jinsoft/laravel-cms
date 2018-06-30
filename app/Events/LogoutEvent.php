@@ -11,14 +11,19 @@ class LogoutEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
+
+    public $ip;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $ip)
     {
-        //
+        $this->user = $user;
+        $this->ip = $ip;
     }
 
     /**
