@@ -1,37 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xiaojin
- * Email: job@ainiok.com
- * Date: 2018/6/30 16:26
- */
 
 namespace App\Events;
 
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class LoginEvent extends Event
+class LoginEvent
 {
-    use SerializesModels;
-
-    public $user;
-
-    public $ip;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
+     *
      * @return void
      */
-    public function __construct($user, $ip)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->ip = $ip;
+        //
     }
 
     /**
-     * Get the channels the event should be broadcast on.
-     * @return array
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
