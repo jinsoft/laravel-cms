@@ -23,8 +23,14 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - predis/predis
 - yzalis/identicon  //像素头像
 
+## vuejs
 
+> npm install
+ 
+> npm run dev
 
+如果出现 'cross-env' 不是内部或外部命令，也不是可运行的程序
+> npm i cross-env --save-dev
 
 ## Learning Laravel
 
