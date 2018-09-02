@@ -20,6 +20,17 @@ use Faker\Generator as Faker;
 |
 */
 
+$factory->define(\App\Model\User::class, function (Faker $faker) {
+    static $password;
+    return [
+        'uuid' => \Faker\Provider\Uuid::uuid(),
+        'name' => $faker->name,
+        'phone' => $faker->phoneNumber,
+        'email' => $faker->safeEmail,
+        'password' => $password ?: $password = bcrypt('123456'),
+    ];
+});
+
 $factory->define(\App\Models\Article::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(mt_rand(3, 10)),

@@ -21,11 +21,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('login', 'AuthController@showLoginForm');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout','AuthController@logout');
+    Route::post('login', 'AuthController@login')->name('admin.login');
+    Route::post('logout','AuthController@logout')->name('admin.logout');
 
     Route::group(['middleware'=>'auth:admin'],function(){
-        Route::get('/','AdminController@index');
+        Route::get('/','AdminController@index')->name('admin');
     });
 });
 
