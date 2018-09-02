@@ -23,6 +23,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('login', 'AuthController@showLoginForm');
     Route::post('login', 'AuthController@login');
     Route::post('logout','AuthController@logout');
+
+    Route::group(['middleware'=>'auth:admin'],function(){
+        Route::get('/','AdminController@index');
+    });
 });
 
 
