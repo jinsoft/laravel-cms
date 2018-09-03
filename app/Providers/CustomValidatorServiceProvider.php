@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Providers;
+
 /**
  * Created by PhpStorm.
  * User: xiaojin
@@ -7,7 +10,7 @@
  */
 
 use Illuminate\Support\ServiceProvider;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class CustomValidatorServiceProvider extends ServiceProvider
 {
@@ -28,10 +31,10 @@ class CustomValidatorServiceProvider extends ServiceProvider
             return str_replace([':attribute'], $attribute, $message);
         });
         // 安全邮箱验证
-        Validator::extend('safe_email', function ($attribute, $value, $parameters, $validator) {
+        Validator::extend('safe_input', function ($attribute, $value, $parameters, $validator) {
             return !preg_match(self::SAFE_CHARTERS_REG, $value);
         });
-        Validator::replacer('safe_email', function ($message, $attribute, $rule, $parameters) {
+        Validator::replacer('safe_input', function ($message, $attribute, $rule, $parameters) {
             return str_replace([':attribute'], $attribute, $message);
         });
         //图片后缀名合法性
@@ -44,6 +47,15 @@ class CustomValidatorServiceProvider extends ServiceProvider
         //电话号码校验
         Validator::extend('telephone', function ($attribute, $value, $parameters) {
             return preg_match('/^((1[36789][0-9]|15[012356789]|14[57]|100)[0-9]{8})$|^(\d{7,8}|\d{3,4}-\d{7,8}|\d{3,4}-\d{7,8}-\d{1,4}|\d{7,8}-\d{1,4})$/', $value);
+        });
+        //必须包含大小写字母，数字和特殊字符
+        Validator::extend('strength_pwd', function ($attribute, $value, $parameters) {
+            return preg_match('/\pL/', $value) && preg_match('/\pN/', $value)
+                && preg_match('/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u', $value)
+                && preg_match("/[_'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\-|\|/", $value);
+        });
+        Validator::replacer('strength_pwd', function ($message, $attribute, $rule, $parameters) {
+            return str_replace([':attribute'], $attribute, $message);
         });
     }
 
