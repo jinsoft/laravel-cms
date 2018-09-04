@@ -22,6 +22,16 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'create_at', 'update_at',
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function login_history()
+    {
+        return $this->hasMany('App\Model\AdminLoginHistory');
+    }
 }

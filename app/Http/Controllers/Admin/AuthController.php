@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\LockoutEvent;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Validator;
 use App;
@@ -37,6 +38,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        //$this->clearLoginAttempts($request);
         if (!$request->has('phone_code')) {
             // 校验登陆
             $this->validateLogin($request);
@@ -46,7 +48,7 @@ class AuthController extends Controller
             if (Auth::guard('admin')->attempt($credentials)) {
                 if (Auth::check()) {
                     //处理登陆成功
-                    return $this->handleUserAuthenticateFailed($request);
+                    return $this->handleUserWasAuthenticated($request);
                 } else {
                     //二次验证
                 }
@@ -89,6 +91,14 @@ class AuthController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function handleUserWasAuthenticated(Request $request)
+    {
+        //清除登陆失败记录
+        $this->clearLoginAttempts($request);
+        $admin = $this->guard()->user();
+
+    }
+
     public function validateLogin(Request $request)
     {
         $attempts = $this->attempts($request);
@@ -122,15 +132,48 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Redirect the user after determining they are locked out.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendLockoutResponse(Request $request)
+    {
+        $seconds = $this->limiter()->availableIn(
+            $this->throttleKey($request)
+        );
+
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.throttle', ['seconds' => $seconds])],
+        ])->status(423);
+    }
+
     public function attempts(Request $request)
     {
-        return app(RateLimiter::class)->attempts($this->getThrottlekey($request));
+        return app(RateLimiter::class)->attempts($this->throttleKey($request));
 
     }
 
-    public function getThrottlekey(Request $request)
+    /**
+     * Get the maximum number of attempts to allow.
+     *
+     * @return int
+     */
+    public function maxAttempts()
     {
-        return mb_strtolower($request->get('name')) . '|' . $request->ip();
+        return property_exists($this, 'maxAttempts') ? $this->maxAttempts : config('logincfg.lock_count');
+    }
+
+    /**
+     * Get the number of minutes to throttle for.
+     * 配置文件设置的是秒,这里要转为分
+     * @return int
+     */
+    public function decayMinutes()
+    {
+        return property_exists($this, 'decayMinutes') ? $this->decayMinutes : config('logincfg.admin_lock_time') / 60;
     }
 
     public function getCredentials(Request $request)

@@ -17,6 +17,7 @@ class AdminsTableSeeder extends Seeder
             'uuid' => \Faker\Provider\Uuid::uuid(),
             'name' => 'Administrator',
             'email' => 'admin@ainiok.com',
+            'phone' => '13148885200',
             'password' => Hash::make('123456')
         ]);
     }
