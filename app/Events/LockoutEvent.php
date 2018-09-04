@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,14 +15,25 @@ class LockoutEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $request;
+
+    public $user_type;
+
+    public $attempts;
+
+    public $max_attempts;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request, $user_type, $attempts)
     {
         //
+        $this->request = $request;
+        $this->user_type = $user_type;
+        $this->attempts = $attempts;
     }
 
     /**
@@ -31,6 +43,7 @@ class LockoutEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        //return new PrivateChannel('channel-name');
+        return [];
     }
 }

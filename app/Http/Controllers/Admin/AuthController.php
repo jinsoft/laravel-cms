@@ -7,6 +7,8 @@ use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\LockoutEvent;
+use Illuminate\Validation\ValidationException;
 use Validator;
 use App;
 use Auth;
@@ -41,17 +43,50 @@ class AuthController extends Controller
             //获取用户登陆凭证
             $credentials = $this->getCredentials($request);
             // 用户登陆
-            if(Auth::guard('admin')->attempt($credentials))
-            {
-                if(Auth::check())
-                {
+            if (Auth::guard('admin')->attempt($credentials)) {
+                if (Auth::check()) {
                     //处理登陆成功
-                }else{
+                    return $this->handleUserAuthenticateFailed($request);
+                } else {
                     //二次验证
                 }
             }
-            dd($request);
+            return $this->handleUserAuthenticateFailed($request);
         }
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/admin');
+    }
+
+    public function handleUserAuthenticateFailed(Request $request)
+    {
+        //判断账号是否被禁用
+        if ($admin = $this->guard()->getLastAttempted()) {
+            if ($admin->forbidden) {
+                $msg = trans('login.user_forbidden', ['name' => $request->name]);
+                throw ValidationException::withMessages([$request->name => $msg]);
+            }
+        }
+        #如果用户登录失败，则记录用户失败次数
+        $this->incrementLoginAttempts($request);
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request, 'admin', $this->attempts($request));
+            return $this->sendLockoutResponse($request);
+        }
+        #返回失败信息
+        return $this->sendFailedLoginResponse($request);
     }
 
     public function validateLogin(Request $request)
@@ -66,7 +101,7 @@ class AuthController extends Controller
             $rule_list = 'required|exists:admins,phone|digits:11';
         } else {
             $this->loginUsernameType = 'email';
-            $rule_list = 'reuqired|safe_input|email|exists:admins,email|max:30';
+            $rule_list = 'required|safe_input|email|exists:admins,email|max:30';
         }
         //用户信息校验
         $rules = [
@@ -107,24 +142,17 @@ class AuthController extends Controller
 
     protected function guard()
     {
-        return auth()->guard('admin');
+        return Auth::guard('admin');
     }
 
-    protected function validator(array $data)
+    /**
+     * Fire an event when a lockout occurs.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function fireLockoutEvent(Request $request, $user_type, $attempts)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:admins',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-
-    protected function create(array $data)
-    {
-        return Admin::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        event(new LockoutEvent($request, $user_type, $attempts));
     }
 }

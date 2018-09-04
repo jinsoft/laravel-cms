@@ -26,7 +26,7 @@ $factory->define(\App\Model\User::class, function (Faker $faker) {
         'uuid' => \Faker\Provider\Uuid::uuid(),
         'name' => $faker->name,
         'phone' => $faker->phoneNumber,
-        'email' => $faker->safeEmail,
+        'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('123456'),
     ];
 });

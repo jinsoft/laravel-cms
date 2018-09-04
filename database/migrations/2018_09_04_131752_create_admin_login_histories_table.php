@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserLoginHistoriesTable extends Migration
+class CreateAdminLoginHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateUserLoginHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_login_histories', function (Blueprint $table) {
+        Schema::create('admin_login_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uuid', 36);
-            $table->string('ip', 15);
-            $table->string('platform', 16)->nullable();
+            $table->string('uuid',36);
+            $table->string('ip',15);
+            $table->string('platform',16)->nullable();
             $table->string('user_name', 255)->nullable();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('admin_id')->unsigned()->nullable();
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->boolean('status')->default(1);
-            $table->string('msg', 64)->nullable();
+            $table->string('msg',64)->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateUserLoginHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_login_histories');
+        Schema::dropIfExists('admin_login_histories');
     }
 }
