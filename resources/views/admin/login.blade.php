@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="{{asset('/static/admin/layadmin/style/admin.css')}}" media="all">
     <link rel="stylesheet" href="{{asset('/static/admin/layadmin/style/login.css')}}" media="all">
     <style>
-        {{--.layadmin-user-login {--}}
-            {{--background: url({{asset('/static/admin/images/bg.jpg')}});--}}
-        {{--}--}}
+        .layadmin-user-login {
+            background: url({{asset('/static/admin/images/bg.jpg')}});
+        }
     </style>
 </head>
 <body>

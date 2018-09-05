@@ -25,10 +25,10 @@ class Admin extends Authenticatable
         'password', 'remember_token', 'created_at', 'updated_at',
     ];
 
-//    public function setPasswordAttribute($value)
-//    {
-//        $this->attributes['password'] = bcrypt($value);
-//    }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     public function login_history()
     {

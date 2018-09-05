@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Auth::routes();
 
@@ -26,6 +26,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::group(['middleware'=>'auth:admin'],function(){
         Route::get('/','AdminController@index')->name('admin');
+        Route::get('/dashboard','AdminController@dashboard')->name('admin.dashboard');
+        Route::get('/console','AdminController@console')->name('admin.console');
     });
 });
 
