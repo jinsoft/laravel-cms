@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="{{asset('/static/admin/layadmin/style/admin.css')}}" media="all">
     <link rel="stylesheet" href="{{asset('/static/admin/layadmin/style/login.css')}}" media="all">
     <style>
-        .layadmin-user-login {
-            background: url({{asset('/static/admin/images/bg.jpg')}});
-        }
+        {{--.layadmin-user-login {--}}
+            {{--background: url({{asset('/static/admin/images/bg.jpg')}});--}}
+        {{--}--}}
     </style>
 </head>
 <body>
@@ -39,7 +39,7 @@
                 <div class="layui-form-item">
                     <label class="layadmin-user-login-icon layui-icon layui-icon-password"
                            for="LAY-user-login-password"></label>
-                    <input type="password" name="password" value="12345" lay-verify="required" placeholder="密码"
+                    <input type="password" name="password" value="123456" lay-verify="required" placeholder="密码"
                            class="layui-input">
                 </div>
                 {{--<div class="layui-form-item">--}}

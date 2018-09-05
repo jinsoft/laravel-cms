@@ -48,9 +48,11 @@ class AuthController extends Controller
             if (Auth::guard('admin')->attempt($credentials)) {
                 if (Auth::check()) {
                     //处理登陆成功
+                    dd("111");
                     return $this->handleUserWasAuthenticated($request);
                 } else {
                     //二次验证
+                    dd("2");
                 }
             }
             return $this->handleUserAuthenticateFailed($request);
@@ -96,6 +98,7 @@ class AuthController extends Controller
         //清除登陆失败记录
         $this->clearLoginAttempts($request);
         $admin = $this->guard()->user();
+        dd($admin);
 
     }
 
