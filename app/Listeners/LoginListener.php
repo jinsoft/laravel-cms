@@ -21,11 +21,20 @@ class LoginListener
     /**
      * Handle the event.
      *
-     * @param  LoginEvent  $event
+     * @param  LoginEvent $event
      * @return void
      */
     public function handle(LoginEvent $event)
     {
         //
+        $user = $event->user;
+        $login_info = [
+            'username' => $user->name,
+            'ip' => $event->ip,
+            'uuid' => $user->uuid,
+            'msg' => '登录成功',
+            'status' => 1
+        ];
+        $user->login_history()->create($login_info);
     }
 }
