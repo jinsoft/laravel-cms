@@ -28,6 +28,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/','AdminController@index')->name('admin');
         Route::get('/dashboard','AdminController@dashboard')->name('admin.dashboard');
         Route::get('/console','AdminController@console')->name('admin.console');
+
+        Route::get('/setting/smtp','SettingController@smtp')->name('admin.setting.smtp');
+        Route::get('/setting/info','SettingController@info')->name('admin.setting.info');
+        Route::post('/setting/{uuid}','SettingController@infoUpdate')->name('admin.setting.infoUpdate');
     });
 });
 

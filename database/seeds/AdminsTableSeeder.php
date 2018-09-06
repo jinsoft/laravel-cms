@@ -18,7 +18,7 @@ class AdminsTableSeeder extends Seeder
             'name' => 'Administrator',
             'email' => 'admin@ainiok.com',
             'phone' => '13148885200',
-            'password' => Hash::make('123456')
+            'password' => '123456'
         ]);
     }
 }
