@@ -35,7 +35,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         //消息
         Route::get('/message', 'MessageController@index')->name('admin.message');
         //文章
-        Route::resource('article','ArticleController');
+        Route::resource('article', 'ArticleController');
+        Route::get('article/data','ArticleController@jsonData')->name('admin.article.data');
+        Route::resource('category', 'CategoryController');
+        Route::resource('comment', 'CommentController');
+        Route::resource('tag', 'TagController');
     });
 });
 
