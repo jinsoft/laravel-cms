@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::post('/setting/{uuid}', 'SettingController@infoUpdate')->name('admin.setting.infoUpdate');
         //消息
         Route::get('/message', 'MessageController@index')->name('admin.message');
+        //文章
+        Route::resource('article','ArticleController');
     });
 });
 

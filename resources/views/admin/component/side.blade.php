@@ -204,31 +204,10 @@
                 </dd>
             </dl>
         </li>
-        <li data-name="template" class="layui-nav-item">
-            <a href="javascript:;" lay-tips="页面" lay-direction="2">
-                <i class="layui-icon layui-icon-template"></i>
-                <cite>页面</cite>
-            </a>
-            <dl class="layui-nav-child">
-                <dd><a lay-href="template/personalpage.html">个人主页</a></dd>
-                <dd><a lay-href="template/addresslist.html">通讯录</a></dd>
-                <dd><a lay-href="template/goodslist.html">商品列表</a></dd>
-                <dd><a lay-href="template/msgboard.html">留言板</a></dd>
-                <dd><a lay-href="template/search.html">搜索结果</a></dd>
-                <dd><a href="user/reg.html" target="_blank">注册</a></dd>
-                <dd><a href="user/login.html" target="_blank">登入</a></dd>
-                <dd><a href="user/forget.html" target="_blank">忘记密码</a></dd>
-                <dd><a lay-href="template/tips/404.html">404页面不存在</a></dd>
-                <dd><a lay-href="template/tips/error.html">错误提示</a></dd>
-                <dd><a lay-href="//www.baidu.com/">百度一下</a></dd>
-                <dd><a lay-href="//www.layui.com/">layui官网</a></dd>
-                <dd><a lay-href="//www.layui.com/admin/">layuiAdmin官网</a></dd>
-            </dl>
-        </li>
         <li data-name="app" class="layui-nav-item">
             <a href="javascript:;" lay-tips="应用" lay-direction="2">
                 <i class="layui-icon layui-icon-app"></i>
-                <cite>应用</cite>
+                <cite>运营管理</cite>
             </a>
             <dl class="layui-nav-child">
 
@@ -238,6 +217,7 @@
                         <dd data-name="list"><a lay-href="app/content/list.html">文章列表</a></dd>
                         <dd data-name="tags"><a lay-href="app/content/tags.html">分类管理</a></dd>
                         <dd data-name="comment"><a lay-href="app/content/comment.html">评论管理</a></dd>
+                        <dd data-name="comment"><a lay-href="app/content/comment.html">标签管理</a></dd>
                     </dl>
                 </dd>
                 <dd data-name="forum">
