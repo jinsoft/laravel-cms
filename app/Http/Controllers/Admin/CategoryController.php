@@ -18,6 +18,10 @@ class CategoryController extends Controller
         return view('admin.category.index');
     }
 
+    public function ddd()
+    {
+        echo "111";
+    }
     /**
      * Show the form for creating a new resource.
      *

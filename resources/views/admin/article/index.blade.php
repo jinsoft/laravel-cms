@@ -73,7 +73,7 @@
 
             table.render({
                 elem: '#dateTable'
-                , url: '{{route('admin.article.data')}}'
+                , url: "{{route('admin.article.data')}}"
                 , cols: [[
                     {
                         type: "checkbox",

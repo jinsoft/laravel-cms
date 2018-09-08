@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\ArticleCollection;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,9 +20,12 @@ class ArticleController extends Controller
         return view('admin.article.index');
     }
 
-    public function jsonData()
+    public function jsonData(Request $request)
     {
-        dd("11");
+        $model = new Article();
+        $limit = $request->limit ?: 15;
+        $article = $model::orderBy('updated_at', 'desc')->paginate($limit);
+        return new ArticleCollection($article);
     }
 
     /**
