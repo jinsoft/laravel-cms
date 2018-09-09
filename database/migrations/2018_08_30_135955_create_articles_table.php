@@ -20,8 +20,8 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('thumb',200)->nullable();
             $table->text('body');
-            $table->integer('view_count')->default(999);
-            $table->integer('comment_count')->default(99);
+            $table->integer('view_count')->nullable()->default(999);
+            $table->integer('comment_count')->nullable()->default(99);
             $table->timestamps();
         });
     }

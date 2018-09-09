@@ -40,10 +40,11 @@ class app extends Command
         //
         $this->execShellWithPrettyPrint('composer dump-autoload');
         $this->execShellWithPrettyPrint('php artisan migrate:rollback');
+        $this->execShellWithPrettyPrint('php artisan migrate');
         $this->execShellWithPrettyPrint('php artisan key:generate');
         $this->execShellWithPrettyPrint('php artisan migrate --seed');
 //        $this->execShellWithPrettyPrint('php artisan passport:install');
-        $this->execShellWithPrettyPrint('php artisan storage:link');
+//        $this->execShellWithPrettyPrint('php artisan storage:link');
     }
 
     /**

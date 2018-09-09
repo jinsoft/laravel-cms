@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->tinyInteger('parent_id')->unsigned();
             $table->string('name');
-            $table->string('sort')->default(99);
+            $table->string('sort')->nullable()->default(99);
             $table->string('remark')->nullable();
             $table->timestamps();
         });

@@ -32,18 +32,23 @@ $factory->define(\App\Model\User::class, function (Faker $faker) {
 
 $factory->define(\App\Model\Category::class,function (Faker $faker){
     return [
-        'name'=>$faker->word
+        'parent_id'=>0,
+        'name'=>$faker->name
     ];
 });
 
 $factory->define(\App\Model\Tag::class,function (Faker $faker){
     return [
-        'name'=>$faker->word
+        'name'=>$faker->name
     ];
 });
 
 $factory->define(\App\Models\Article::class, function (Faker $faker) {
+    $user_ids = \App\Model\User::pluck('id')->random();
+    $category_ids = \App\Model\Category::pluck('id')->random();
     return [
+        'user_id'=>$user_ids,
+        'category_id'=>$category_ids,
         'title' => $faker->sentence(mt_rand(3, 10)),
         'body' => $faker->paragraph,
     ];
