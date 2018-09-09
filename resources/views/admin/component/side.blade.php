@@ -19,23 +19,24 @@
                 </dd>
             </dl>
         </li>
-
+        <li data-name="message" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="内容" lay-direction="2">
+                <i class="layui-icon layui-icon-read"></i>
+                <cite>内容</cite>
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a lay-href="{{route('article.index')}}">文章列表</a></dd>
+                <dd><a lay-href="{{route('category.index')}}">分类管理</a></dd>
+                <dd><a lay-href="{{route('comment.index')}}">评论管理</a></dd>
+                <dd><a lay-href="{{route('tag.index')}}">标签管理</a></dd>
+            </dl>
+        </li>
         <li data-name="app" class="layui-nav-item">
             <a href="javascript:;" lay-tips="资讯系统" lay-direction="2">
                 <i class="layui-icon layui-icon-app"></i>
                 <cite>资讯系统</cite>
             </a>
             <dl class="layui-nav-child">
-
-                <dd data-name="content">
-                    <a href="javascript:;">内容系统</a>
-                    <dl class="layui-nav-child">
-                        <dd data-name="list"><a lay-href="{{route('article.index')}}">文章列表</a></dd>
-                        <dd data-name="tags"><a lay-href="{{route('category.index')}}">分类管理</a></dd>
-                        <dd data-name="comment"><a lay-href="{{route('comment.index')}}">评论管理</a></dd>
-                        <dd data-name="comment"><a lay-href="{{route('tag.index')}}">标签管理</a></dd>
-                    </dl>
-                </dd>
                 <dd data-name="forum">
                     <a href="javascript:;">社区系统</a>
                     <dl class="layui-nav-child">

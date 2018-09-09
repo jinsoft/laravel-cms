@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Resources\ArticleCollection;
+use App\Model\Category;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,15 +17,21 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
-        return view('admin.article.index');
+        $categories = Category::all();
+        return view('admin.article.index', compact('categories'));
     }
 
     public function jsonData(Request $request)
     {
-        $model = new Article();
+        $model = Article::query();
         $limit = $request->limit ?: 15;
-        $article = $model::orderBy('updated_at', 'desc')->paginate($limit);
+        if ($request->has('category_id')) {
+            $model = $model->where('category_id', $request->get('category_id'));
+        }
+        if ($request->has('title')) {
+            $model = $model->where('title', 'like', '%' . $request->get('title') . '%');
+        }
+        $article = $model->with('category')->orderBy('updated_at', 'desc')->paginate($limit);
         return new ArticleCollection($article);
     }
 

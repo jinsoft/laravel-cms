@@ -5,15 +5,13 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">文章标签</label>
+                    <label class="layui-form-label">分类</label>
                     <div class="layui-input-inline">
-                        <select name="label">
-                            <option value="">请选择标签</option>
-                            <option value="0">美食</option>
-                            <option value="1">新闻</option>
-                            <option value="2">八卦</option>
-                            <option value="3">体育</option>
-                            <option value="4">音乐</option>
+                        <select name="category_id">
+                            <option value="">请选择类别</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -24,7 +22,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -37,6 +35,9 @@
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
             </div>
             <table id="dateTable" lay-filter="dateTable"></table>
+            <script type="text/html" id="category">
+                @{{d.category.name}}
+            </script>
             <script type="text/html" id="buttonTpl">
                 <button class="layui-btn layui-btn-xs">已发布</button>
                 <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
@@ -59,21 +60,29 @@
                 , form = layui.form
                 , layer = layui.layer;
 
-            table.render({
+            var dataTable = table.render({
                 elem: '#dateTable'
                 , url: "{{route('admin.article.data')}}"
+                , limit: 15
+                , limits: [15, 30, 50, 100]
                 , cols: [[
                     {
                         type: "checkbox",
                         fixed: "left"
                     }, {
                         field: "id",
-                        width: 100,
+                        width: 50,
                         title: "文章ID",
                         sort: true
                     }, {
+                        field: 'name',
+                        title: '类别',
+                        width: 200,
+                        toolbar: '#category'
+                    }, {
                         field: "title",
-                        title: "文章标题"
+                        title: "文章标题",
+                        width: 350
                     }, {
                         field: "created_at",
                         title: "创建时间",
@@ -97,11 +106,16 @@
                     }
                 ]]
                 , page: true
+                , defaultToolbar: ['filter', 'print']
             });
             //监听搜索
-            form.on('submit(LAY-app-contlist-search)', function (data) {
+            form.on('submit(search)', function (data) {
                 var field = data.field;
-                console.log('submit');
+                console.log(field.title);
+                dataTable.reload({
+                    where: {category_id: field.category_id, title: field.title},
+                    page: {curr: 1}
+                });
                 //执行重载
                 table.reload('LAY-app-content-list', {
                     where: field
@@ -110,7 +124,7 @@
 
             var $ = layui.$, active = {
                 batchdel: function () {
-                    var checkStatus = table.checkStatus('LAY-app-content-list')
+                    var checkStatus = table.checkStatus('dateTable')
                         , checkData = checkStatus.data; //得到选中的数据
 
                     if (checkData.length === 0) {
