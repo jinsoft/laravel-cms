@@ -30,6 +30,18 @@ $factory->define(\App\Model\User::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(\App\Model\Category::class,function (Faker $faker){
+    return [
+        'name'=>$faker->word
+    ];
+});
+
+$factory->define(\App\Model\Tag::class,function (Faker $faker){
+    return [
+        'name'=>$faker->word
+    ];
+});
+
 $factory->define(\App\Models\Article::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(mt_rand(3, 10)),

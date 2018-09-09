@@ -5,24 +5,6 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">文章ID</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">作者</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="author" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">标题</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <label class="layui-form-label">文章标签</label>
                     <div class="layui-input-inline">
                         <select name="label">
@@ -33,6 +15,12 @@
                             <option value="3">体育</option>
                             <option value="4">音乐</option>
                         </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -113,7 +101,7 @@
             //监听搜索
             form.on('submit(LAY-app-contlist-search)', function (data) {
                 var field = data.field;
-
+                console.log('submit');
                 //执行重载
                 table.reload('LAY-app-content-list', {
                     where: field

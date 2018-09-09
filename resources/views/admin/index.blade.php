@@ -61,6 +61,9 @@
 
 <script src="{{asset('/static/admin/layadmin/layui/layui.js')}}"></script>
 <script>
+    if (window.top !== window.self) {
+        window.top.location = window.location;
+    }
     layui.config({
         base: '/static/admin/layadmin/' //静态资源所在路径
     }).extend({
