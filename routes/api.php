@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['namespace'=>'wxapi'],function(){
+    Route::post('user/login','UserController@login');
+    Route::post('user/register','UserController@register');
+
+    Route::get('getCategoryList','CategoryController@getCategoryList');
+    Route::get('articles','ArticleController@index');
+    Route::get('articles/{id}','ArticleController@show');
+});
