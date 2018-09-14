@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const util = require("./../../utils/util.js");
+const router = require("./../../config/router.js");
 
 Page({
   data: {
@@ -16,6 +18,8 @@ Page({
     })
   },
   onLoad: function () {
+    let page = this;
+    page.login();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

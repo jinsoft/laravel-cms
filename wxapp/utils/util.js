@@ -1,3 +1,5 @@
+const router = require("./../config/router.js");
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -14,6 +16,14 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const login = (function(){
+  wx.login({
+    success(result){
+      console.log(result);
+    }
+  });
+})
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  login: login
 }
