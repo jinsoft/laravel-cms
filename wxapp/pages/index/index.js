@@ -47,6 +47,15 @@ Page({
       })
     }
   },
+
+  login(){
+    let page = this;
+    util.login(function(data){
+      consloe.log(data);
+    });
+  },
+
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo

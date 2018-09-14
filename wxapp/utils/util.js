@@ -19,6 +19,10 @@ const formatNumber = n => {
 const login = (function(){
   wx.login({
     success(result){
+      if(!result.code){
+        console.log("login error:",result);
+        return;
+      }
       console.log(result);
     }
   });
