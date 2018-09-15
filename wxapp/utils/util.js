@@ -27,6 +27,32 @@ const login = (function(){
     }
   });
 })
+
+const httpRequest=(options,callback)=>{
+  if(!options || !options.url){
+    console.log("Url is Empty",options);
+    return;
+  }
+  let data = options.data? options.data:{};
+  let header = options.header?options.header:{};
+  if(!header["x-token"]){
+    header["x-token"] = wx.getstorage("token");
+  }
+  wx.showLoading({
+    title: '加载中……',
+    mask:true
+  })
+  wx.request({
+    url: options.url,
+    data:data,
+    method:options.method?options.method:"GET",
+    header:header,
+    dataType:"json",
+    success(result){
+      console.log(result);
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
   login: login
